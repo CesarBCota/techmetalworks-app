@@ -1,0 +1,46 @@
+# Dependências
+node_modules/
+
+# Ambiente
+.env
+.env.local
+.env.production
+.env*.local
+
+# Banco de dados SQLite
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+prisma/dev.db
+data/
+
+# Build Next.js
+.next/
+out/
+
+# Cache
+.cache/
+.eslintcache
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# PM2
+ecosystem.config.js.bak

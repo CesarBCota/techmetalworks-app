@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       String  @id @default(cuid())
+  nome     String
+  email    String  @unique
+  senha    String
+  ativo    Boolean @default(true)
+  criadoEm DateTime @default(now())
+}
+
+model Cliente {
+  id           String  @id @default(cuid())
+  razaoSocial  String
+  cnpj         String?
+  inscEstadual String?
+  // Faturamento
+  fatLogradouro String?
+  fatBairro     String?
+  fatCidade     String?
+  fatUf         String?
+  fatCep        String?
+  // Cobrança
+  cobLogradouro String?
+  cobBairro     String?
+  cobCidade     String?
+  cobUf         String?
+  cobCep        String?
+  // Entrega
+  entLogradouro String?
+  entBairro     String?
+  entCidade     String?
+  entUf         String?
+  entCep        String?
+  // Contato
+  solicitante  String?
+  cargo        String?
+  telefone     String?
+  email        String?
+  ativo        Boolean  @default(true)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  orcamentosUsicrom OrcamentoUsicrom[]
+  orcamentosTimbro  OrcamentoTimbro[]
+}
+
+model Representante {
+  id            String   @id @default(cuid())
+  nome          String
+  percComissao  Float    @default(3.0)
+  ativo         Boolean  @default(true)
+  criadoEm      DateTime @default(now())
+
+  orcamentosUsicrom OrcamentoUsicrom[]
+}
+
+model OrcamentoUsicrom {
+  id              String   @id @default(cuid())
+  numero          String   @unique
+  dataEmissao     DateTime @default(now())
+  dataValidade    DateTime
+  clienteId       String
+  cliente         Cliente  @relation(fields: [clienteId], references: [id])
+  representanteId String?
+  representante   Representante? @relation(fields: [representanteId], references: [id])
+  status          String   @default("rascunho")
+
+  percRepresentante Float @default(3.0)
+  percTecnoLumen    Float @default(4.0)
+
+  prazoEntrega       String?
+  condicoesPagamento String?
+  transportadora     String  @default("USICROM")
+  frete              String  @default("CIF")
+  observacao         String?
+
+  valorTotalUsicrom Float @default(0)
+  valorTotalFinal   Float @default(0)
+  valorComissaoRep  Float @default(0)
+  valorComissaoTecno Float @default(0)
+
+  criadoPor    String
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  itens           ItemOrcamentoUsicrom[]
+  lancamentoCaixa LancamentoCaixa?
+}
+
+model ItemOrcamentoUsicrom {
+  id          String  @id @default(cuid())
+  orcamentoId String
+  orcamento   OrcamentoUsicrom @relation(fields: [orcamentoId], references: [id], onDelete: Cascade)
+  sequencia   Int
+  tipoProduto String
+  descricao   String
+  modelo      String?
+
+  parametrosJson String @default("{}")
+
+  pesoPretoKg   Float @default(0)
+  pesoGalvKg    Float @default(0)
+  precoKgUsicrom Float @default(0)
+
+  quantidade       Float  @default(1)
+  unidade          String @default("PC")
+  precoUnitSemIpi  Float  @default(0)
+  precoTotalSemIpi Float  @default(0)
+
+  aliquotaIcms Float @default(12.0)
+  pisCofins    Float @default(9.25)
+  valorSt      Float @default(0)
+  aliquotaIpi  Float @default(0)
+  valorIpi     Float @default(0)
+
+  criadoEm DateTime @default(now())
+}
+
+model OrcamentoTimbro {
+  id           String   @id @default(cuid())
+  numero       String   @unique
+  dataEmissao  DateTime @default(now())
+  dataValidade DateTime
+  clienteId    String
+  cliente      Cliente  @relation(fields: [clienteId], references: [id])
+  status       String   @default("rascunho")
+
+  fonte           String
+  lmeUsdTon       Float
+  premioUsdTon    Float
+  acrescimoUsdTon Float @default(0)
+  percImpostos    Float
+  percDespachante Float @default(1.0)
+  cambioDolar     Float
+
+  precoBaseUsdTon  Float @default(0)
+  precoFinalUsdTon Float @default(0)
+  precoFinalBrlTon Float @default(0)
+  quantidadeTon    Float @default(1)
+
+  valorAcrescimoBrl Float @default(0)
+  valorTotalBrl     Float @default(0)
+
+  prazoEntrega       String?
+  condicoesPagamento String?
+  observacao         String?
+
+  criadoPor    String
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  lancamentoCaixa LancamentoCaixa?
+}
+
+model LancamentoCaixa {
+  id        String   @id @default(cuid())
+  data      DateTime
+  descricao String
+  tipo      String
+  categoria String
+  valor     Float
+  conta     String?
+
+  orcamentoUsicomId String?          @unique
+  orcamentoUsicrom  OrcamentoUsicrom? @relation(fields: [orcamentoUsicomId], references: [id])
+  orcamentoTimbroId String?          @unique
+  orcamentoTimbro   OrcamentoTimbro? @relation(fields: [orcamentoTimbroId], references: [id])
+
+  origem    String   @default("manual")
+  criadoPor String
+  criadoEm  DateTime @default(now())
+}
