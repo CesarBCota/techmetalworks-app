@@ -1,3 +1,5 @@
+﻿export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { getSession } from '@/lib/auth'
