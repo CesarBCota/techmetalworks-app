@@ -37,8 +37,8 @@ interface ItemForm {
 const fmt = (v: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
 
-// Marcelo: comissão fixa de representação
 const PERC_MARCELO = 2.65
+const PERC_OUTROS  = 3.0
 
 export function FormNovoOrcamento({ representantes }: Props) {
   const router = useRouter()
@@ -57,8 +57,11 @@ export function FormNovoOrcamento({ representantes }: Props) {
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState('')
 
-  const percRep = PERC_MARCELO
-  const percTecno = Math.max(0, totalComissao - PERC_MARCELO)
+  const repSelecionado = representantes.find(r => r.id === repId)
+  const percRep = repId
+    ? (repSelecionado?.nome.toLowerCase().includes('marcelo') ? PERC_MARCELO : PERC_OUTROS)
+    : 0
+  const percTecno = Math.max(0, totalComissao - percRep)
 
   const aliquotaIcms = calcularAliquotaIcms(ufDestino)
 
@@ -210,7 +213,9 @@ export function FormNovoOrcamento({ representantes }: Props) {
             </select>
           </div>
           <div>
-            <label className="label">% Marcelo (fixo)</label>
+            <label className="label">
+              {repSelecionado ? `% ${repSelecionado.nome.split(' ')[0]}` : '% Representante'}
+            </label>
             <div className="input bg-bg-card/50 text-text-muted cursor-default flex items-center">
               {percRep.toFixed(2)}%
             </div>
@@ -222,7 +227,7 @@ export function FormNovoOrcamento({ representantes }: Props) {
               className="input"
               value={totalComissao}
               onChange={e => setTotalComissao(Number(e.target.value))}
-              step={0.05} min={PERC_MARCELO} max={15}
+              step={0.05} min={percRep} max={15}
             />
           </div>
           <div>
@@ -320,7 +325,7 @@ export function FormNovoOrcamento({ representantes }: Props) {
               <div className="text-blue-glow font-bold text-lg">{fmt(totalFinal)}</div>
             </div>
             <div>
-              <div className="text-text-muted text-xs mb-1">Marcelo ({percRep}%)</div>
+              <div className="text-text-muted text-xs mb-1">{repSelecionado?.nome.split(' ')[0] ?? 'Representante'} ({percRep.toFixed(2)}%)</div>
               <div className="text-text font-semibold">{fmt(comissaoRep)}</div>
             </div>
             <div>
@@ -344,3 +349,5 @@ export function FormNovoOrcamento({ representantes }: Props) {
     </div>
   )
 }
+
+export default FormNovoOrcamento

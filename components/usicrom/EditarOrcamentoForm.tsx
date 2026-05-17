@@ -29,6 +29,7 @@ interface Props {
 }
 
 const PERC_MARCELO = 2.65
+const PERC_OUTROS  = 3.0
 
 export function EditarOrcamentoForm({ orcamentoId, numero, representantes, initialData }: Props) {
   const router = useRouter()
@@ -45,8 +46,11 @@ export function EditarOrcamentoForm({ orcamentoId, numero, representantes, initi
   const [salvando,           setSalvando]            = useState(false)
   const [erro,               setErro]                = useState('')
 
-  const percRep   = PERC_MARCELO
-  const percTecno = Math.max(0, totalComissao - PERC_MARCELO)
+  const repSelecionado = representantes.find(r => r.id === repId)
+  const percRep = repId
+    ? (repSelecionado?.nome.toLowerCase().includes('marcelo') ? PERC_MARCELO : PERC_OUTROS)
+    : 0
+  const percTecno = Math.max(0, totalComissao - percRep)
 
   async function salvar() {
     if (!clienteId) { setErro('Selecione um cliente.'); return }
@@ -120,7 +124,9 @@ export function EditarOrcamentoForm({ orcamentoId, numero, representantes, initi
             </select>
           </div>
           <div>
-            <label className="label">% Marcelo (fixo)</label>
+            <label className="label">
+              {repSelecionado ? `% ${repSelecionado.nome.split(' ')[0]}` : '% Representante'}
+            </label>
             <div className="input bg-bg-card/50 text-text-muted cursor-default flex items-center">
               {percRep.toFixed(2)}%
             </div>
@@ -133,7 +139,7 @@ export function EditarOrcamentoForm({ orcamentoId, numero, representantes, initi
               value={totalComissao}
               onChange={e => setTotalComissao(Number(e.target.value))}
               step={0.05}
-              min={PERC_MARCELO}
+              min={percRep}
               max={15}
             />
           </div>
@@ -202,3 +208,5 @@ export function EditarOrcamentoForm({ orcamentoId, numero, representantes, initi
     </div>
   )
 }
+
+export default EditarOrcamentoForm
