@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import { FONTES_TIMBRO } from '@/lib/calculos-timbro'
 import { BotaoImprimir } from '@/components/ui/BotaoImprimir'
 
@@ -17,8 +16,7 @@ const fmtData = (d: Date) =>
   new Date(d).toLocaleDateString('pt-BR')
 
 export default async function PdfTimbroPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const orc = await prisma.orcamentoTimbro.findUnique({
     where: { id: params.id },

@@ -1,7 +1,6 @@
-import { notFound, redirect } from 'next/navigation'
+﻿import { notFound, redirect } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import { FormNovoOrcamentoTimbro } from '@/components/timbro/FormNovoOrcamentoTimbro'
 import type { FonteTimbro } from '@/lib/calculos-timbro'
 import Link from 'next/link'
@@ -9,8 +8,7 @@ import Link from 'next/link'
 interface Props { params: { id: string } }
 
 export default async function EditarTimbroPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const orc = await prisma.orcamentoTimbro.findUnique({
     where: { id: params.id },

@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { AlterarStatus } from '@/components/usicrom/AlterarStatus'
@@ -16,8 +15,7 @@ const fmtData = (d: Date) =>
 interface Props { params: { id: string } }
 
 export default async function DetalheOrcamentoPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const orc = await prisma.orcamentoUsicrom.findUnique({
     where: { id: params.id },

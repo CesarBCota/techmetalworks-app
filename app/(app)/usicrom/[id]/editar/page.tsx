@@ -1,15 +1,13 @@
-import { notFound, redirect } from 'next/navigation'
+﻿import { notFound, redirect } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import { EditarOrcamentoForm } from '@/components/usicrom/EditarOrcamentoForm'
 import Link from 'next/link'
 
 interface Props { params: { id: string } }
 
 export default async function EditarUsicomPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const [orc, representantes] = await Promise.all([
     prisma.orcamentoUsicrom.findUnique({

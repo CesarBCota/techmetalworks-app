@@ -3,12 +3,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
 
     const { searchParams } = new URL(req.url)
     const mes    = searchParams.get('mes')    // 'YYYY-MM'
@@ -72,8 +70,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const session = await requireAuth(cookieStore)
+    const session = await requireAuth()
 
     const body = await req.json()
     const { data, descricao, tipo, categoria, valor, conta } = body

@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import { BotaoImprimir } from '@/components/ui/BotaoImprimir'
 
 // Inline formatters — no dependency on @/lib/utils
@@ -17,8 +16,7 @@ interface Props {
 }
 
 export default async function PdfOrcamentoUsicomPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const orc = await prisma.orcamentoUsicrom.findUnique({
     where: { id: params.id },

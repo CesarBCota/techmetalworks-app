@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import { FormCliente } from '@/components/clientes/FormCliente'
 import Link from 'next/link'
 import { formatData } from '@/lib/utils'
@@ -11,8 +10,7 @@ interface Props {
 }
 
 export default async function EditarClientePage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const cliente = await prisma.cliente.findUnique({
     where: { id: params.id },

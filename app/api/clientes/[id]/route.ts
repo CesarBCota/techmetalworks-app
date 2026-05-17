@@ -3,12 +3,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
     const c = await prisma.cliente.findUnique({
       where: { id: params.id },
       include: {
@@ -24,8 +22,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
     const body = await req.json()
 
     const c = await prisma.cliente.update({
@@ -64,8 +61,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
 
     const count = await prisma.orcamentoUsicrom.count({ where: { clienteId: params.id } })
     const countT = await prisma.orcamentoTimbro.count({ where: { clienteId: params.id } })

@@ -3,12 +3,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
     const q = req.nextUrl.searchParams.get('q') || ''
     const limit = parseInt(req.nextUrl.searchParams.get('limit') || '20')
 
@@ -35,8 +33,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
     const body = await req.json()
 
     if (!body.razaoSocial) {

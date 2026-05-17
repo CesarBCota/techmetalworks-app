@@ -3,14 +3,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 interface Ctx { params: { id: string } }
 
 export async function GET(_req: NextRequest, { params }: Ctx) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
 
     const lancamento = await prisma.lancamentoCaixa.findUnique({
       where: { id: params.id },
@@ -33,8 +31,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
 
 export async function PUT(req: NextRequest, { params }: Ctx) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
 
     const existing = await prisma.lancamentoCaixa.findUnique({ where: { id: params.id } })
     if (!existing) {
@@ -75,8 +72,7 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
 
 export async function DELETE(_req: NextRequest, { params }: Ctx) {
   try {
-    const cookieStore = cookies()
-    await requireAuth(cookieStore)
+    await requireAuth()
 
     const existing = await prisma.lancamentoCaixa.findUnique({ where: { id: params.id } })
     if (!existing) {

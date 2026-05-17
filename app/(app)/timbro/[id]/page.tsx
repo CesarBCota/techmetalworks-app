@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import { db as prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { AlterarStatusTimbro } from '@/components/timbro/AlterarStatusTimbro'
@@ -19,8 +18,7 @@ const fmtData = (d: Date) =>
 interface Props { params: { id: string } }
 
 export default async function DetalheTimbroPage({ params }: Props) {
-  const cookieStore = cookies()
-  await requireAuth(cookieStore)
+  await requireAuth()
 
   const orc = await prisma.orcamentoTimbro.findUnique({
     where: { id: params.id },
