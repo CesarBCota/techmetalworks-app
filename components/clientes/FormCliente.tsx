@@ -251,8 +251,6 @@ export function FormCliente({ cliente }: Props) {
 }
 
 // ── Endereço genérico ──
-type AnyForm = Record<string, string | null | undefined>
-
 function EnderecoFields({
   prefix,
   form,
@@ -260,10 +258,10 @@ function EnderecoFields({
 }: {
   label: string
   prefix: 'fat' | 'ent' | 'cob'
-  form: AnyForm
-  set: (campo: string, val: string) => void
+  form: ClienteData
+  set: (campo: keyof ClienteData, val: string) => void
 }) {
-  const f = (s: string) => `${prefix}${s.charAt(0).toUpperCase() + s.slice(1)}`
+  const f = (s: string) => `${prefix}${s.charAt(0).toUpperCase() + s.slice(1)}` as keyof ClienteData
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -288,7 +286,7 @@ function EnderecoFields({
         <select className="input" value={(form[f('uf')] as string) || ''} onChange={e => set(f('uf'), e.target.value)}>
           <option value="">UF</option>
           {ESTADOS_BRASILEIROS.map(uf => (
-            <option key={uf} value={uf}>{uf}</option>
+            <option key={uf.sigla} value={uf.sigla}>{uf.sigla}</option>
           ))}
         </select>
       </div>

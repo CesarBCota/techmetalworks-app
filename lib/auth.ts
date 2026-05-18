@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { db } from './db'
 import bcrypt from 'bcryptjs'
 import { sessionOptions } from './session'
+import type { SessionData } from './session'
 
 export type { SessionData } from './session'
 export { sessionOptions } from './session'
