@@ -1,7 +1,6 @@
 ﻿export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 import { getSession } from '@/lib/auth'
 import { db as prisma } from '@/lib/db'
 import { calcularTimbro, FONTES_TIMBRO } from '@/lib/calculos-timbro'
@@ -16,8 +15,7 @@ function gerarNumero(razaoSocial: string): string {
 // ── GET /api/timbro ── lista de orçamentos
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const { searchParams } = new URL(req.url)
@@ -43,8 +41,7 @@ export async function GET(req: NextRequest) {
 // ── POST /api/timbro ── criar orçamento
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const body = await req.json()

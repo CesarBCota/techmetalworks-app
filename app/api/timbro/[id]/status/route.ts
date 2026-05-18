@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { getSession } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 const TRANSICOES: Record<string, string[]> = {
   rascunho: ['enviado'],
@@ -15,8 +14,7 @@ const TRANSICOES: Record<string, string[]> = {
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const { novoStatus } = await req.json()

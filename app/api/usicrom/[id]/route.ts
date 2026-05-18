@@ -3,12 +3,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { getSession } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const orc = await prisma.orcamentoUsicrom.findUnique({
@@ -30,8 +28,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const existing = await prisma.orcamentoUsicrom.findUnique({ where: { id: params.id } })
@@ -72,8 +69,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const orc = await prisma.orcamentoUsicrom.findUnique({ where: { id: params.id } })

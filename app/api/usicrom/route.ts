@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 import { getSession } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 function gerarNumero(razaoSocial: string): string {
   const d = new Date()
@@ -23,8 +22,7 @@ function gerarNumero(razaoSocial: string): string {
 
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const status = req.nextUrl.searchParams.get('status')
@@ -54,8 +52,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = cookies()
-    const session = await getSession(cookieStore)
+    const session = await getSession()
     if (!session?.isLoggedIn) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
     const body = await req.json()
