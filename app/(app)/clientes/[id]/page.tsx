@@ -56,7 +56,32 @@ export default async function EditarClientePage({ params }: Props) {
       </div>
 
       {/* Formulário de edição */}
-      <FormCliente cliente={cliente} />
+      <FormCliente cliente={{
+        id: cliente.id,
+        razaoSocial: cliente.razaoSocial,
+        nomeFantasia: cliente.nomeFantasia,
+        cnpj: cliente.cnpj,
+        inscEstadual: cliente.inscEstadual,
+        solicitante: cliente.solicitante,
+        cargo: cliente.cargo,
+        telefone: cliente.telefone,
+        email: cliente.email,
+        fatLogradouro: cliente.fatLogradouro,
+        fatBairro: cliente.fatBairro,
+        fatCidade: cliente.fatCidade,
+        fatUf: cliente.fatUf,
+        fatCep: cliente.fatCep,
+        cobLogradouro: cliente.cobLogradouro,
+        cobBairro: cliente.cobBairro,
+        cobCidade: cliente.cobCidade,
+        cobUf: cliente.cobUf,
+        cobCep: cliente.cobCep,
+        entLogradouro: cliente.entLogradouro,
+        entBairro: cliente.entBairro,
+        entCidade: cliente.entCidade,
+        entUf: cliente.entUf,
+        entCep: cliente.entCep,
+      }} />
 
       {/* Últimos orçamentos */}
       {cliente.orcamentosUsicrom.length > 0 && (
