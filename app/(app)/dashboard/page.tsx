@@ -2,6 +2,8 @@ import { db } from '@/lib/db'
 import { formatBRL, formatData, STATUS_CONFIG } from '@/lib/utils'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 async function getDashboardData() {
   const now = new Date()
   const inicioMes = new Date(now.getFullYear(), now.getMonth(), 1)

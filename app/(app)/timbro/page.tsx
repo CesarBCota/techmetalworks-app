@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 
+export const dynamic = 'force-dynamic'
+
 interface OrcamentoTimbro {
   id: string
   numero: string

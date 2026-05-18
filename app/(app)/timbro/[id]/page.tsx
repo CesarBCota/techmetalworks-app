@@ -6,6 +6,8 @@ import { StatusBadge } from '@/components/ui/StatusBadge'
 import { AlterarStatusTimbro } from '@/components/timbro/AlterarStatusTimbro'
 import { FONTES_TIMBRO } from '@/lib/calculos-timbro'
 
+export const dynamic = 'force-dynamic'
+
 const fmtBRL = (v: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
 const fmtUSD = (v: number) =>

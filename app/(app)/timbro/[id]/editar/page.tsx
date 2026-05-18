@@ -5,6 +5,8 @@ import { FormNovoOrcamentoTimbro } from '@/components/timbro/FormNovoOrcamentoTi
 import type { FonteTimbro } from '@/lib/calculos-timbro'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 interface Props { params: { id: string } }
 
 export default async function EditarTimbroPage({ params }: Props) {

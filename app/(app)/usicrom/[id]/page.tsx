@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { AlterarStatus } from '@/components/usicrom/AlterarStatus'
 
+export const dynamic = 'force-dynamic'
+
 const fmt = (v: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
 const fmtKg = (v: number) =>

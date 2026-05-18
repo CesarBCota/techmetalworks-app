@@ -4,6 +4,8 @@ import { requireAuth } from '@/lib/auth'
 import { EditarOrcamentoForm } from '@/components/usicrom/EditarOrcamentoForm'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 interface Props { params: { id: string } }
 
 export default async function EditarUsicomPage({ params }: Props) {

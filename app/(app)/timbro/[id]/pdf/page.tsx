@@ -4,6 +4,8 @@ import { requireAuth } from '@/lib/auth'
 import { FONTES_TIMBRO } from '@/lib/calculos-timbro'
 import { BotaoImprimir } from '@/components/ui/BotaoImprimir'
 
+export const dynamic = 'force-dynamic'
+
 interface Props { params: { id: string } }
 
 const fmtBRL = (v: number) =>

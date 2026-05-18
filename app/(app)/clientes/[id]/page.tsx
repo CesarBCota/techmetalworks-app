@@ -5,6 +5,8 @@ import { FormCliente } from '@/components/clientes/FormCliente'
 import Link from 'next/link'
 import { formatData } from '@/lib/utils'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: { id: string }
 }
