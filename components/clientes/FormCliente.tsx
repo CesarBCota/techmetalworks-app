@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ESTADOS_BRASILEIROS } from '@/lib/icms'
 
 interface ClienteData {
+  [key: string]: string | null | undefined
   id?: string
   razaoSocial?: string
   nomeFantasia?: string | null
