@@ -91,7 +91,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* ── KPI Cards ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 
         <div className="card space-y-1">
           <p className="text-xs text-text-faint uppercase tracking-wider">Saldo Total</p>
@@ -99,16 +99,6 @@ export default async function DashboardPage() {
             {formatBRL(d.saldoTotal)}
           </p>
           <p className="text-xs text-text-faint">Acumulado histórico</p>
-        </div>
-
-        <div className="card space-y-1">
-          <p className="text-xs text-text-faint uppercase tracking-wider">Saldo do Mês</p>
-          <p className={`text-2xl font-bold mono ${d.saldoMes >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-            {formatBRL(d.saldoMes)}
-          </p>
-          <p className="text-xs text-text-faint">
-            +{formatBRL(d.receitasMes)} / −{formatBRL(d.despesasMes)}
-          </p>
         </div>
 
         <div className="card space-y-1">
