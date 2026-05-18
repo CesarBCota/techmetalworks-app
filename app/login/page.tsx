@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
@@ -19,7 +19,7 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, senha }),
+        body: JSON.stringify({ username, senha }),
       })
       const data = await res.json()
 
@@ -55,15 +55,15 @@ export default function LoginPage() {
         <div className="bg-bg-card border border-bg-border rounded-2xl p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="label">E-mail</label>
+              <label className="label">Nome de usuário</label>
               <input
-                type="email"
+                type="text"
                 className="input"
-                placeholder="seu@email.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                placeholder="seu.usuario"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
                 required
-                autoComplete="email"
+                autoComplete="username"
                 autoFocus
               />
             </div>

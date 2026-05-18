@@ -11,6 +11,7 @@ datasource db {
 model Usuario {
   id       String  @id @default(cuid())
   nome     String
+  username String? @unique
   email    String  @unique
   senha    String
   ativo    Boolean @default(true)

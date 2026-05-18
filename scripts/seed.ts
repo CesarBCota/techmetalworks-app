@@ -11,31 +11,31 @@ async function main() {
   // ── Usuários ────────────────────────────────────────────────────────────────
   const cesar = await db.usuario.upsert({
     where: { email: 'cesaraugusto@techmetalworks.com.br' },
-    update: {},
+    update: { nome: 'César', username: 'cesar' },
     create: {
-      nome: 'César Augusto',
+      nome: 'César',
+      username: 'cesar',
       email: 'cesaraugusto@techmetalworks.com.br',
       senha: senhaHash,
       ativo: true,
     },
   })
-  console.log(`✅ Usuário: ${cesar.nome} (${cesar.email})`)
+  console.log(`✅ Usuário: ${cesar.nome} (@${cesar.username})`)
 
-  const socio = await db.usuario.upsert({
+  const cezar = await db.usuario.upsert({
     where: { email: 'cezarcota@techmetalworks.com.br' },
-    update: {},
+    update: { nome: 'Cezar', username: 'cezar' },
     create: {
-      nome: 'Sócio',
+      nome: 'Cezar',
+      username: 'cezar',
       email: 'cezarcota@techmetalworks.com.br',
       senha: senhaHash,
       ativo: true,
     },
   })
-  console.log(`✅ Usuário: ${socio.nome} (${socio.email})`)
+  console.log(`✅ Usuário: ${cezar.nome} (@${cezar.username})`)
 
   // ── Representantes ───────────────────────────────────────────────────────────
-  // Representante.id é cuid (String) — não existe campo @unique em 'nome',
-  // portanto usamos findFirst + create para evitar duplicatas.
   let marcelo = await db.representante.findFirst({ where: { nome: 'Marcelo' } })
   if (!marcelo) {
     marcelo = await db.representante.create({
@@ -79,15 +79,15 @@ async function main() {
 
   console.log('\n🎉 Seed concluído!')
   console.log('\n📋 Credenciais de acesso:')
-  console.log('   ┌─────────────────────────────────────────────┐')
-  console.log('   │  Usuário 1 — César                          │')
-  console.log('   │  Email: cesaraugusto@techmetalworks.com.br  │')
-  console.log('   │  Senha: tecno2024                           │')
-  console.log('   ├─────────────────────────────────────────────┤')
-  console.log('   │  Usuário 2 — Sócio                          │')
-  console.log('   │  Email: cezarcota@techmetalworks.com.br     │')
-  console.log('   │  Senha: tecno2024                           │')
-  console.log('   └─────────────────────────────────────────────┘')
+  console.log('   ┌──────────────────────────────────────────────────────┐')
+  console.log('   │  Usuário 1 — César                                   │')
+  console.log('   │  Username: cesar                                      │')
+  console.log('   │  Senha: tecno2024                                     │')
+  console.log('   ├──────────────────────────────────────────────────────┤')
+  console.log('   │  Usuário 2 — Cezar                                   │')
+  console.log('   │  Username: cezar                                      │')
+  console.log('   │  Senha: tecno2024                                     │')
+  console.log('   └──────────────────────────────────────────────────────┘')
   console.log('\n⚠️  Altere as senhas após o primeiro login!')
 }
 

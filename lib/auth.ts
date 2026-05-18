@@ -16,9 +16,9 @@ export async function getSession() {
   return session
 }
 
-export async function login(email: string, senha: string) {
+export async function login(username: string, senha: string) {
   const usuario = await db.usuario.findUnique({
-    where: { email: email.toLowerCase().trim() },
+    where: { username: username.toLowerCase().trim() },
   })
 
   if (!usuario || !usuario.ativo) {

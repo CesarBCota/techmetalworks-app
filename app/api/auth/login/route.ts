@@ -5,13 +5,13 @@ import { login } from '@/lib/auth'
 
 export async function POST(request: Request) {
   try {
-    const { email, senha } = await request.json()
+    const { username, senha } = await request.json()
 
-    if (!email || !senha) {
-      return NextResponse.json({ ok: false, erro: 'Email e senha obrigatórios' }, { status: 400 })
+    if (!username || !senha) {
+      return NextResponse.json({ ok: false, erro: 'Usuário e senha obrigatórios' }, { status: 400 })
     }
 
-    const resultado = await login(email, senha)
+    const resultado = await login(username, senha)
 
     if (!resultado.ok) {
       return NextResponse.json({ ok: false, erro: resultado.erro }, { status: 401 })
