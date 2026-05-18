@@ -7,7 +7,8 @@ import { ESTADOS_BRASILEIROS } from '@/lib/icms'
 interface ClienteData {
   id?: string
   razaoSocial?: string
-  cnpj?: string
+  nomeFantasia?: string | null
+  cnpj?: string | null
   inscEstadual?: string | null
   solicitante?: string | null
   cargo?: string | null
