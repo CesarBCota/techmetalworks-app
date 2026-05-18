@@ -1,6 +1,8 @@
 import { db } from '@/lib/db'
 import FormNovoOrcamento from '@/components/usicrom/FormNovoOrcamento'
 
+export const dynamic = 'force-dynamic'
+
 export default async function NovoOrcamentoUsicromPage() {
   const representantes = await db.representante.findMany({
     where: { ativo: true },

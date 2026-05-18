@@ -1,5 +1,7 @@
 import { FormCliente } from '@/components/clientes/FormCliente'
 
+export const dynamic = 'force-dynamic'
+
 export default function NovoClientePage() {
   return (
     <div className="p-4 md:p-6 max-w-4xl mx-auto">

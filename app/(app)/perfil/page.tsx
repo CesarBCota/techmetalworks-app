@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { requireAuth } from '@/lib/auth'
 import TrocarSenhaForm from '@/components/perfil/TrocarSenhaForm'
 
+export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Meu Perfil — Tech Metalworks' }
 
 export default async function PerfilPage() {
