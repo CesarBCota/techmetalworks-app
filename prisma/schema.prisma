@@ -20,6 +20,7 @@ model Usuario {
 model Cliente {
   id           String  @id @default(cuid())
   razaoSocial  String
+  nomeFantasia String?
   cnpj         String?
   inscEstadual String?
   // Faturamento
